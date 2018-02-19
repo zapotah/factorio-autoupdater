@@ -1,4 +1,4 @@
-# factorio-autoupdater
+# Factorio-autoupdater
 Autoupdater script for factorio-base and mods
 
 This factorio-updater available here:
@@ -9,3 +9,7 @@ https://github.com/astevens/factorio-mod-updater
 
 factorio-updater uses factorio-init available here:
 https://github.com/Bisa/factorio-init
+
+## Usage
+Add to cron something like this (this checks for updates every two hours):
+0 */2 * * * /opt/factorio-init/auto-update.sh
