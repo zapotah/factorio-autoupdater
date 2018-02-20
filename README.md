@@ -1,10 +1,10 @@
 # Factorio-autoupdater
 Autoupdater script for factorio-base and mods
 
-The factorio-updater available here:
+Factorio-updater available here:
 https://github.com/narc0tiq/factorio-updater
 
-And factorio-mod-updater with my patch for dry-run here:
+Factorio-mod-updater with my patch for dry-run here:
 https://github.com/astevens/factorio-mod-updater
 
 Factorio-updater uses factorio-init available here:
