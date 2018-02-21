@@ -11,7 +11,7 @@ Factorio-updater uses factorio-init available here:
 https://github.com/Bisa/factorio-init
 
 ## Usage
-Put auto-update.sh into /opt/factorio-init and add to cron something like this (this checks for updates every two hours):
+Put auto-update.sh into /opt/factorio-init and add to cron something like this (this checks for updates every two hours and doesnt send notifications when the script executes properly and there is no update):
 ```bash
-0 */2 * * * /opt/factorio-init/auto-update.sh
+0 */2 * * * /opt/factorio-init/auto-update.sh | tee >(logger -t "factorio update") | grep -v 'No new update'
 ```
