@@ -1,46 +1,44 @@
 #!/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-export DISPLAY=:0.0
 
 cd /opt/factorio
-/opt/factorio-init/factorio update --dry-run | grep 'No new updates'
+su -c "/opt/factorio-init/factorio update --dry-run" factorio | grep 'No new updates'
 servupdate=$?
-/opt/factorio-mod-updater/factorio-mod-updater --dry-run > /dev/null
+su -c "/opt/factorio-mod-updater/factorio-mod-updater --dry-run" factorio > /dev/null
 modupdate=$?
 if [ $servupdate == 0 ] && [ $modupdate == 0 ]
 then
         echo "No new update for Factorio or Mods"
-        #/opt/factorio-init/factorio cmd "SERVER NO NEW UPDATE"
         logger "No new update for Factorio or Mods"
         exit 0;
 elif [ $servupdate == 2 ] || [ $modupdate == 2 ]
 then
-        echo "new update"
-        logger "updating Factorio or mods"
+        echo "New update"
+        logger "Updating Factorio or mods"
         if [ $servupdate == 2 ]
         then
-                /opt/factorio-init/factorio cmd "SERVER WILL BE RESTARTED IN 1 MINUTE TO UPDATE TO NEW FACTORIO VERSION"
+                su -c '/opt/factorio-init/factorio cmd "Server will be restarted in 1 minute to upgrade to new factorio version"' factorio
         fi
         if [ $modupdate == 2 ]
         then
-                /opt/factorio-init/factorio cmd "SERVER WILL BE RESTARTED IN 1 MINUTE TO UPDATE MODS"
+                su -c '/opt/factorio-init/factorio cmd "Server will be restarted in 1 minute to upgrade mods"' factorio
         fi
         sleep 50
-        /opt/factorio-init/factorio cmd "SERVER RESTARTING IN 10 SECONDS"
+        su -c '/opt/factorio-init/factorio cmd "Server restarting in 10 seconds"' factorio
         sleep 10
-        /opt/factorio-init/factorio cmd "SERVER RESTARTING"
-        /bin/systemctl stop factorio.service
+        su -c '/opt/factorio-init/factorio cmd "Server restarting now"' factorio
+        systemctl stop factorio.service
         if [ $servupdate == 2 ]
         then
                 echo "Server update found"
-                /opt/factorio-init/factorio update
+                su -c "/opt/factorio-init/factorio update" factorio
         fi
         if [ $modupdate == 2 ]
         then
                 echo "Mod update found"
-                su -c /opt/factorio-mod-updater/factorio-mod-updater factorio
+                su -c "/opt/factorio-mod-updater/factorio-mod-updater" factorio
         fi
-        /bin/systemctl start factorio.service
+        systemctl start factorio.service
         exit 0;
 else
         echo "Something went boo-boo somewhere..."
