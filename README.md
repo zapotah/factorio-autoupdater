@@ -20,3 +20,7 @@ SHELL=/bin/bash
 
 ## Options
 The autoupdater script by default outputs only messages when there is an update, but outputs everything it does into syslog through logger inside the script (logger is assumed to exist on the system in $PATH). if you want to have output of current versions, add -p after the script as a switch and it will output the current version of the server and Mods installed even if there is no update.
+
+## To-do
+1) rewrite to be functional and to have more switches built-in
+2) write to read config if needed later on
